@@ -1,3 +1,5 @@
+// #IMPORTS
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -9,27 +11,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class HttpClient {
-    static String GET_URL = "http://httpbin.org/get?course=networking&assignment=1"; //dummy test url for GET
-    static String POST_URL = "http://httpbin.org/post";//dummy test url for POST
-    final static Integer PORT = 80; //always 80 for HTTP requests
+
+    final static Integer PORT = 80; //always set 80 for HTTP requests
+    static String POST_URL = "http://httpbin.org/post";//url test for POST
+    static String GET_URL = "http://httpbin.org/get?course=networking&assignment=1"; //url test for GET
+
+
 
     public static void main(String[] args) throws Exception {
-        /*
-         * First test for Client Request and Server Response with sockets
-         * String ip = "localhost"; int port = 5000; Socket s = new Socket(ip,port);
-         *
-         * String str = "Hello World!";
-         *
-         * OutputSreamWriter os = new OutputStreamWriter(s.getOutputStream());
-         * PrintWriter out = new PrintWriter(os); os.write(str); os.flush(); os.close();
-         */
 
-        Map<String, String> responseMap;
+        Map<String, String> mapRespond;
         System.out.print("- httpc ");
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        String request = sc.nextLine();
 
-        if(command.contentEquals("help")) {
+        if(request.contentEquals("help")) {
             System.out.println("httpc is a curl-like application but supports HTTP protocol only.");
             System.out.println("Usage:");
             System.out.println("       httpc command [arguments]");
@@ -40,7 +36,7 @@ public class HttpClient {
             System.out.println("Use \"httpc help [command]\" for more information about a command.");
             System.out.println();
 
-        } else if(command.contentEquals("help get")){
+        } else if(request.contentEquals("help get")){
             System.out.println("Usage:");
             System.out.println("       httpc get [-v] [-h key:value] URL");
             System.out.println("Get executes a HTTP GET request for a given URL.");
@@ -49,7 +45,7 @@ public class HttpClient {
                     + "\n       -h key:value Associates headers to HTTP Request with the format 'key:value'");
             System.out.println();
 
-        } else if(command.contentEquals("help post")) {
+        } else if(request.contentEquals("help post")) {
             System.out.println("Usage:");
             System.out.println("       httpc post [-v] [-h key:value] [-d inline-data] [-f file] URL");
             System.out.println("Post executes a HTTP POST request for a given URL with inline data or from file.");
@@ -61,49 +57,49 @@ public class HttpClient {
             System.out.println();
 
         }
-        else if((command.contains("get")) && (command.contains("-v")) && (command.contains(GET_URL))) {
+        else if((request.contains("get")) && (request.contains("-v")) && (request.contains(GET_URL))) {
             try {
-                responseMap = sendGetRequest(GET_URL);
-                System.out.println("\n" + responseMap.get("header"));
-                System.out.println("\n" + responseMap.get("body"));
+                mapRespond = sendGetRequest(GET_URL);
+                System.out.println("\n" + mapRespond.get("header"));
+                System.out.println("\n" + mapRespond.get("body"));
             }
             catch (Exception e){
                 e.printStackTrace();
             }
         }
-        else if((command.contains("get")) && (command.contains("-h")) && (command.contains(GET_URL))) {
+        else if((request.contains("get")) && (request.contains("-h")) && (request.contains(GET_URL))) {
             try {
-                responseMap = sendGetRequest(GET_URL);
-                System.out.println("\n" + responseMap.get("header"));
+                mapRespond = sendGetRequest(GET_URL);
+                System.out.println("\n" + mapRespond.get("header"));
             }
             catch (Exception e){
                 e.printStackTrace();
             }
         }
-        else if((command.contains("post")) && (command.contains("-v")) && (command.contains(POST_URL))) {
+        else if((request.contains("post")) && (request.contains("-v")) && (request.contains(POST_URL))) {
             try {
-                responseMap = sendGetRequest(POST_URL);
-                System.out.println("\n" + responseMap.get("header"));
-                System.out.println("\n" + responseMap.get("body"));
+                mapRespond = sendGetRequest(POST_URL);
+                System.out.println("\n" + mapRespond.get("header"));
+                System.out.println("\n" + mapRespond.get("body"));
             }
             catch (Exception e){
                 e.printStackTrace();
             }
         }
-        else if((command.contains("post")) && (command.contains("-h")) && (command.contains(POST_URL))) {
+        else if((request.contains("post")) && (request.contains("-h")) && (request.contains(POST_URL))) {
             try {
-                responseMap = sendGetRequest(POST_URL);
-                System.out.println("\n" + responseMap.get("header"));
+                mapRespond = sendGetRequest(POST_URL);
+                System.out.println("\n" + mapRespond.get("header"));
             }
             catch (Exception e){
                 e.printStackTrace();
             }
         }
-        else if((command.contains("post")) && (command.contains("-d")) && (command.contains(POST_URL))) {
+        else if((request.contains("post")) && (request.contains("-d")) && (request.contains(POST_URL))) {
             try {
 
-                responseMap = sendGetRequest(GET_URL);
-                System.out.println("\n" + responseMap.get("header"));
+                mapRespond = sendGetRequest(GET_URL);
+                System.out.println("\n" + mapRespond.get("header"));
             }
             catch (Exception e){
 
