@@ -164,6 +164,13 @@ public class HttpClient {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (request.contains("get") && (request.contains(url_get))) {
+            try {
+                mapRespond = sendGetRequest(url_get);
+                System.out.println("\n" + mapRespond.get("body"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if ((request.contains("post")) && (request.contains("-v")) && (request.contains(url_post))) {
             try {
                 mapRespond = sendGetRequest(url_post);
